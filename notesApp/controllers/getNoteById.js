@@ -1,11 +1,11 @@
-const Note= require('../models/notes')
-module.exports = async (req,res) =>{
-    try {
+const Note = require("../models/notes");
+module.exports = async (req, res) => {
+  try {
     const id = req.params.id;
-    const result = await Note.findById(id)
-    res.json(result) 
-}
-    catch(err){
-      console.log(err)
-    }
-  } 
+    const userId = req.session.userId;
+    const result = await Note.findOne({ id, userid: userId });
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+  }
+};
