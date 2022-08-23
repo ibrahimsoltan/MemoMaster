@@ -1,29 +1,19 @@
-const bcrypt = require('bcrypt')
-const User = require('../models/users')
-module.exports = (req, res) =>{
-    const { userName, password } = req.body;
-    User.findOne({userName:userName}, (error,user) => {
-    if (user){
-    bcrypt.compare(password, user.password, (error, rightData) =>{
-    if(rightData){
-    req.session.userId = user._id//puts the session id to the logedin user
-    req.user = user
-    res.json({data : user , code :200})
-    //req.session.save()
-    //res.cookie("session.userId" , user._id).send('cookie set')
-
-    
-    console.log(req.user)
+const bcrypt = require("bcrypt");
+const User = require("../models/users");
+module.exports = (req, res) => {
+  const { userName, password } = req.body;
+  User.findOne({ userName }, (error, user) => {
+    if (user) {
+      bcrypt.compare(password, user.password, (error, rightData) => {
+        if (rightData) {
+          req.session.userId = user._id;
+          res.json({ data: user, code: 200 });
+        } else {
+          res.json({ error: "Invalid Password" });
+        }
+      });
+    } else {
+      res.json({ error: "No User Found" });
     }
-    else{
-    res.json(error)
-    }
-    })
-    }
-    else{
-        res.json(error)
-
-    }
-    })
-    }
-    
+  });
+};
