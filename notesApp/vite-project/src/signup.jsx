@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Notes from "./notes";
 
-const componentDidMount = async (name, pass) => {
+const signUp = async (inputs) => {
   // POST request using fetch with async/await
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({ userName: name, password: pass }),
+    body: JSON.stringify(inputs),
   };
-  console.log(requestOptions);
   const response = await fetch("http://localhost:8000/signup", requestOptions);
   const data = await response.json();
-  console.log(data.code);
-  console.log(data);
   return data;
 };
 
@@ -22,6 +19,7 @@ function SignUpForm() {
   const [inputs, setInputs] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [id, setID] = useState(0);
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -31,15 +29,13 @@ function SignUpForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //console.log(inputs);
-    const data = await componentDidMount(inputs.username, inputs.pass);
+    const data = await signUp(inputs);
     const newid = data.data._id;
     if (data.code == 200) setLoggedIn(true);
     setID(newid);
   };
 
   if (loggedIn) {
-    console.log(id);
     return <Link to={`/notes/${id}`}> View my Notes</Link>;
   } else {
     return (
@@ -49,17 +45,17 @@ function SignUpForm() {
           Enter your name:
           <input
             type="text"
-            name="username"
-            value={inputs.username || ""}
+            name="userName"
+            value={inputs.userName || ""}
             onChange={handleChange}
           />
         </label>
         <label>
           Enter A password:
           <input
-            type="number"
-            name="pass"
-            value={inputs.pass || ""}
+            type="password"
+            name="password"
+            value={inputs.password || ""}
             onChange={handleChange}
           />
         </label>

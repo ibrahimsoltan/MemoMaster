@@ -9,15 +9,11 @@ const componentDidMount = async (note, id) => {
     credentials: "include",
     body: JSON.stringify({ content: note }),
   };
-  console.log(requestOptions);
-  console.log(id);
   const response = await fetch(
     `http://localhost:8000/add/${id}`,
     requestOptions
   );
   const data = await response.json();
-  console.log(data.code);
-  console.log(data);
   return data;
 };
 
@@ -36,7 +32,6 @@ function AddNote() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = await componentDidMount(inputs.note, id);
-    console.log(data.code);
     if (data.code == 200) setCode(data.code);
   };
   if (code == 200)

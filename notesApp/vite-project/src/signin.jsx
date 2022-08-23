@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const componentDidMount = async (name, pass) => {
+const componentDidMount = async (inputs) => {
   // POST request using fetch with async/await
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({ userName: name, password: pass }),
+    body: JSON.stringify(inputs),
   };
-  console.log(requestOptions);
   const response = await fetch("http://localhost:8000/signin", requestOptions);
   const data = await response.json();
-  console.log(data.code);
-  console.log(data);
   return data;
 };
 
@@ -30,8 +27,7 @@ function SignInForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //console.log(inputs);
-    const data = await componentDidMount(inputs.username, inputs.password);
+    const data = await componentDidMount(inputs);
     const newid = data.data._id;
     if (data.code == 200) setLoggedIn(true);
     setID(newid);
@@ -47,8 +43,8 @@ function SignInForm() {
           Enter your name:
           <input
             type="text"
-            name="username"
-            value={inputs.username || ""}
+            name="userName"
+            value={inputs.userName || ""}
             onChange={handleChange}
           />
         </label>
