@@ -8,7 +8,9 @@ function Note() {
   console.log(note);
 
   const fetchData = async () => {
-    const response = await fetch(`http://localhost:8000/note/${params.id}`);
+    const response = await fetch(`http://localhost:8000/note/${params.id}`, {
+      credentials: "include",
+    });
     const data = await response.json();
     setNote(data);
   };
