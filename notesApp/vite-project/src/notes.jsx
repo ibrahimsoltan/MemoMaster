@@ -7,7 +7,7 @@ function Notes() {
   const params = useParams();
   const id = params.id
   const fetchData = async () => {
-    const response = await fetch(`http://localhost:8000/notes/${params.id}`)
+    const response = await fetch(`http://localhost:8000/notes/${params.id}`, {credentials: 'include'})
     const data = await response.json()
     setNotes(data.Notes)
     console.log(data.Notes)

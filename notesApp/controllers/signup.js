@@ -1,4 +1,4 @@
-const User = require('D:/NodeJS/notesApp/models/users')
+const User = require('../models/users')
 module.exports = async (req, res) => {
 try {
     console.log(req.body)

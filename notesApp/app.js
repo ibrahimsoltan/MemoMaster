@@ -4,10 +4,11 @@ const Note  = require("./models/notes")
 const app = express()
 const cors = require("cors");
 const expressSession = require('express-session')
-const { request } = require('http')
+const cookieParser = require('cookie-parser')
 
-app.use(cors());
-app.use(express.json());
+app.use(cors({credentials: true, origin :true }));
+app.use(express.json());  
+app.use(cookieParser())
 const DbURI = 'mongodb+srv://user1:TestApp2022@cluster0.dp8rbp4.mongodb.net/NotesDb?retryWrites=true&w=majority'
 mongoose.connect(DbURI,
     { useNewUrlParser: true, useUnifiedTopology: true })

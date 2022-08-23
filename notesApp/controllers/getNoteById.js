@@ -1,4 +1,4 @@
-const Note= require('D:/NodeJS/notesApp/models/notes')
+const Note= require('../models/notes')
 module.exports = async (req,res) =>{
     try {
     const id = req.params.id;

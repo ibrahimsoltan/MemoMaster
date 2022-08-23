@@ -7,7 +7,8 @@ const componentDidMount = async (note,id)=> {
   const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: note })
+      body: JSON.stringify({ content: note } ,
+        {credentials: 'include'})
   };
   console.log(requestOptions)
   console.log(id)

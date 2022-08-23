@@ -1,7 +1,8 @@
-const Note = require('D:/NodeJS/notesApp/models/notes')
+const Note = require('../models/notes')
 module.exports = async(req, res) => {
     try{
-    const id = req.params.id;
+    const id = req.params.userid;
+    console.log(req.user)
     const result = await Note.find()
     finalRes = []
     result.map(note => {

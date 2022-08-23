@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Notes from "./notes";
+
 
 
 
@@ -10,7 +10,8 @@ const componentDidMount = async (name, pass )=> {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userName: name , password: pass })
+        body: JSON.stringify({ userName: name , password: pass } ,
+          { credentials: 'include'})
     };
     console.log(requestOptions)
     const response = await fetch('http://localhost:8000/signin', requestOptions);
