@@ -10,7 +10,7 @@ const componentDidMount = async (note, id) => {
     body: JSON.stringify({ content: note }),
   };
   const response = await fetch(
-    `http://localhost:8000/add/${id}`,
+    `http://localhost:8000/add`,
     requestOptions
   );
   const data = await response.json();

@@ -7,6 +7,8 @@ module.exports = (req, res) => {
       bcrypt.compare(password, user.password, (error, rightData) => {
         if (rightData) {
           req.session.userId = user._id;
+          req.session.user = user
+          console.log(user);
           res.json({ data: user, code: 200 });
         } else {
           res.json({ error: "Invalid Password" });

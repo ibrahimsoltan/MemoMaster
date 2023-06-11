@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Note = require("./models/notes");
 const app = express();
+const PORT = process.env.PORT || 8000;
 const cors = require("cors");
 const expressSession = require("express-session");
 const cookieParser = require("cookie-parser");
@@ -11,12 +12,17 @@ app.use(cors({ credentials: true, origin: ["http://localhost:5173"] }));
 app.use(express.json());
 app.use(cookieParser());
 // This should be hidden in a .env file
-const DbURI =
-  "mongodb+srv://user1:TestApp2022@cluster0.dp8rbp4.mongodb.net/NotesDb?retryWrites=true&w=majority";
-mongoose
-  .connect(DbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => app.listen(8000))
-  .catch((err) => console.log(err));
+
+
+  const DbURI = 'mongodb+srv://ibrahim:ibrahim1234@student.lmygtpz.mongodb.net/notesDB?retryWrites=true&w=majority'
+  mongoose.connect(DbURI,
+      { useNewUrlParser: true, useUnifiedTopology: true })
+      .then(result => app.listen(PORT, () => {
+          console.log(`server started on port ${PORT}`);
+        }))
+      .catch(err => console.log(err)
+  )
+
 
 app.use(
   expressSession({
@@ -25,7 +31,11 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 24 * 30,
+      httpOnly: false,
+        secure: false,
     },
+    
+    rolling: true,
   })
 );
 
@@ -34,9 +44,11 @@ app.get("/", async (req, res) => {
   res.json({ data: notes });
 });
 
-app.post("/add/:id", require("./controllers/addNote"));
+app.post("/add/", require("./controllers/addNote"));
 app.get("/notes/", require("./controllers/getAllNote"));
 app.get("/note/:id", require("./controllers/getNoteById"));
+
 app.post("/signup", require("./controllers/signup"));
 app.post("/signin", require("./controllers/signin"));
 app.get("/signout", require("./controllers/signout"));
+

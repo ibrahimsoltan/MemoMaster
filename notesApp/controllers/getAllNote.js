@@ -2,6 +2,7 @@ const Note = require("../models/notes");
 module.exports = async (req, res) => {
   try {
     const id = req.session.userId;
+    console.log(req.session.userId)
     const result = await Note.find({ userid: id });
     finalRes = [];
     result.map((note) => {
