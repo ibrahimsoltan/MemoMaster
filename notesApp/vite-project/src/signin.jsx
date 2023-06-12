@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const componentDidMount = async (inputs) => {
   // POST request using fetch with async/await
@@ -20,6 +21,7 @@ function SignInForm() {
   const [inputs, setInputs] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [id, setID] = useState(0);
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -35,34 +37,42 @@ function SignInForm() {
     setID(newid);
   };
 
-  if (loggedIn) {
-    return <Link to={`/notes/${id}`}> View my Notes</Link>;
-  } else {
-    return (
-      <form onSubmit={handleSubmit}>
-        <h1>Sign In</h1>
-        <label>
-          Enter your name:
-          <input
-            type="text"
-            name="userName"
-            value={inputs.userName || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Enter your Password:
-          <input
-            type="text"
-            name="password"
-            value={inputs.password || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <input type="submit" />
-      </form>
-    );
+  useEffect(() => {
+    if (loggedIn) {
+      navigate(`/notes/${id}`);
+    }
+  }, [loggedIn]);
+
+
+   
+    return (<form className="auth-form" onSubmit={handleSubmit}>
+    <h1 className="auth-form-title">Sign In</h1>
+    <div className="form-group">
+      <label htmlFor="userName">Enter your name:</label>
+      <input
+        type="text"
+        id="userName"
+        name="userName"
+        value={inputs.userName || ""}
+        onChange={handleChange}
+        className="form-input"
+      />
+    </div>
+    <div className="form-group">
+      <label htmlFor="password">Enter your Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        value={inputs.password || ""}
+        onChange={handleChange}
+        className="form-input"
+      />
+    </div>
+    <button type="submit" className="submit-button">Sign In</button>
+  </form>
+    );  
   }
-}
+
 
 export default SignInForm;

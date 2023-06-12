@@ -19,24 +19,27 @@ function Notes() {
 
   return (
     <div>
-      <h1>Notes </h1>
-      <h3>A Note taking Site</h3>
-      <ul>
-        <Link to="/">
-          <button>Sign out</button>
-        </Link>
-      </ul>
-      <Link to={`/addNote/${id}`}>
-        <h2> Click here to add a new note </h2>
-      </Link>
-      <div class="site-title"></div>
-      <h1>Your Notes</h1>
-      {notes.map((note) => (
-        <div key={note._id}>
-          <h3>{note.content}</h3>
-          <p>{note.date}</p>
+      <nav>
+        <div class="nav-item">
+          <Link to="/">
+            <button>Sign out</button>
+          </Link>
         </div>
-      ))}
+        <div class="nav-item">
+          <Link to={`/addNote/${id}`}>
+            <button>Add New Note</button>
+          </Link>
+        </div>
+      </nav>
+      
+      <div class="notes-container">
+        {notes.map((note, index) => (
+          <div key={note._id} class={`note-item note-color-${index % 5}`}>
+            <h3>{note.content}</h3>
+            <p>{note.date}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

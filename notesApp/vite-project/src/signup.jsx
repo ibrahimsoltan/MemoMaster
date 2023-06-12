@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Notes from "./notes";
 
 const signUp = async (inputs) => {
   // POST request using fetch with async/await
@@ -35,34 +34,45 @@ function SignUpForm() {
     setID(newid);
   };
 
-  if (loggedIn) {
-    return <Link to={`/notes/${id}`}> View my Notes</Link>;
-  } else {
+  
+  useEffect(() => {
+    if (loggedIn) {
+      navigate(`/notes/${id}`);
+    }
+  }, [loggedIn]);
+
+
+
     return (
-      <form onSubmit={handleSubmit}>
-        <h1>Sign up</h1>
-        <label>
-          Enter your name:
-          <input
-            type="text"
-            name="userName"
-            value={inputs.userName || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Enter A password:
-          <input
-            type="password"
-            name="password"
-            value={inputs.password || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <input type="submit" />
-      </form>
+      <form className="auth-form" onSubmit={handleSubmit}>
+  <h1 className="auth-form-title">Sign Up</h1>
+  <div className="form-group">
+    <label htmlFor="userName">Enter your name:</label>
+    <input
+      type="text"
+      id="userName"
+      name="userName"
+      value={inputs.userName || ""}
+      onChange={handleChange}
+      className="form-input"
+    />
+  </div>
+  <div className="form-group">
+    <label htmlFor="password">Enter A password:</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      value={inputs.password || ""}
+      onChange={handleChange}
+      className="form-input"
+    />
+  </div>
+  <button type="submit" className="submit-button">Sign Up</button>
+</form>
+
     );
   }
-}
+
 
 export default SignUpForm;
