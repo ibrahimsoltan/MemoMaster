@@ -26,7 +26,7 @@ function Notes() {
           </Link>
         </div>
         <div class="nav-item">
-          <Link to={`/addNote/${id}`}>
+          <Link to={`/addNote/`}>
             <button>Add New Note</button>
           </Link>
         </div>

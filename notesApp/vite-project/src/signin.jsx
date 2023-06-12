@@ -39,7 +39,7 @@ function SignInForm() {
 
   useEffect(() => {
     if (loggedIn) {
-      navigate(`/notes/${id}`);
+      navigate(`/notes`);
     }
   }, [loggedIn]);
 

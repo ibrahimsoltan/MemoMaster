@@ -38,7 +38,7 @@ function AddNote() {
     return (
       <div>
         <h2>Note added successfully </h2>
-        <Link to={`/Notes/${id}`}>
+        <Link to={`/Notes`}>
           <h2> Click here to view all notes </h2>
         </Link>
       </div>
