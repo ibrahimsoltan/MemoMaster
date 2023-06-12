@@ -12,9 +12,9 @@ app.use(cors({ credentials: true, origin: ["http://localhost:5173"] }));
 app.use(express.json());
 app.use(cookieParser());
 // This should be hidden in a .env file
+require('dotenv').config();
 
-
-  const DbURI = 'mongodb+srv://ibrahim:ibrahim1234@student.lmygtpz.mongodb.net/notesDB?retryWrites=true&w=majority'
+  const DbURI = process.env.MONGODB_URL;
   mongoose.connect(DbURI,
       { useNewUrlParser: true, useUnifiedTopology: true })
       .then(result => app.listen(PORT, () => {
